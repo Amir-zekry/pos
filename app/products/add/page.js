@@ -23,6 +23,12 @@ function page() {
                         <input type="number" name="price" step="0.01" />
                     </label>
                 </div>
+                <div>
+                    <label>
+                        Profit:
+                        <input type="number" name="profit" step="0.01" />
+                    </label>
+                </div>
                 <button type="submit">Add Product</button>
             </form>
         </div>

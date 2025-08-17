@@ -8,8 +8,8 @@ async function Analytics() {
     const averageOrderValue = await getAverageOrderValue()
     const metrics = [
         { name: 'Total Orders', value: totalOrders },
-        { name: 'Total Revenue', value: totalRevenue._sum.total },
-        { name: 'Average Order Value', value: averageOrderValue._avg.total },
+        { name: 'Total Revenue', value: totalRevenue || 0 },
+        { name: 'Average Order Value', value: averageOrderValue || 0 },
     ]
     return (
         <div className='grid grid-cols-3 gap-4'>

@@ -30,7 +30,8 @@ const orderSlice = createSlice({
             state.total = 0; // Reset total when items are cleared
             state.customer = {};
             state.type = null;
-            state.payment = null;
+            state.paymentMethod = null
+            state.paymentStatus = null
         },
         increaseItemAmount: (state, action) => {
             const item = state.items.find(item => item.id === action.payload.id);

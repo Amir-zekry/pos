@@ -51,14 +51,16 @@ function DetailsForm({ customers }) {
                 id="detailsForm"
                 className="space-y-8"
                 onSubmit={form.handleSubmit((values) => {
-                    const { createdAt, ...customerWithoutDate } = values.customer;
+                    const customerData = values.customer || {};
+                    const { createdAt, ...customerWithoutDate } = customerData;
                     dispatch(setOrderDetails({
                         customer: customerWithoutDate,
                         orderType: values.type,
                         paymentMethod: values.paymentMethod,
                         paymentStatus: values.paymentStatus
                     }));
-                    router.push('/orders/create/details/submit')
+
+                    router.push('/orders/create/details/submit');
                 })}>
                 <FormField
                     control={form.control}

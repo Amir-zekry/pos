@@ -24,8 +24,8 @@ function page() {
         <form
             action={async (formData) => {
                 await createNewOrder(formData)
-                disptach(clearOrder())
                 router.push('/orders')
+                disptach(clearOrder())
             }}
             className='h-full w-full flex'
         >
