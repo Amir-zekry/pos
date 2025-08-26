@@ -1,4 +1,4 @@
-import { Home, ListOrdered, Blocks } from "lucide-react"
+import { Home, ListOrdered, Blocks, Gamepad2, PersonStanding } from "lucide-react"
 
 import {
     Sidebar,
@@ -12,7 +12,6 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import StartNewDay from "./startNewDay"
 
 // Menu items.
 const items = [
@@ -28,8 +27,13 @@ const items = [
     },
     {
         title: "items",
-        url: "/products",
+        url: "/items",
         icon: Blocks,
+    },
+    {
+        title: "Customers",
+        url: "/customers",
+        icon: PersonStanding,
     },
 ]
 
@@ -55,11 +59,6 @@ export function AppSidebar() {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter>
-                <SidebarMenu>
-                    <StartNewDay />
-                </SidebarMenu>
-            </SidebarFooter>
         </Sidebar>
     )
 }

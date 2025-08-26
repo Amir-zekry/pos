@@ -53,7 +53,7 @@ async function OrdersTable({ page }) {
                             <TableHead>Payment Status</TableHead>
                             <TableHead>Payment Method</TableHead>
                             <TableHead>Amount</TableHead>
-                            <TableHead>Actions</TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -77,33 +77,31 @@ async function OrdersTable({ page }) {
                                 </TableCell>
                                 <TableCell>{order.paymentMethod}</TableCell>
                                 <TableCell>{order.total} L.E.</TableCell>
-                                <TableCell className="text-right">
-                                    <div className='flex justify-center ml-auto'>
-                                        <Dialog>
-                                            <DropdownMenu modal={false}>
-                                                <DropdownMenuTrigger>
-                                                    <Ellipsis size={16} className="text-right" />
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent>
-                                                    <DialogTrigger asChild>
-                                                        <DropdownMenuItem>
-                                                            <span>Edit</span>
-                                                        </DropdownMenuItem>
-                                                    </DialogTrigger>
-                                                    <DropdownMenuItem>view</DropdownMenuItem>
-                                                    <DropdownMenuSeparator />
-                                                    <Cancel id={order.id} />
-                                                    <Remove id={order.id} />
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                            <DialogContent>
-                                                <DialogHeader>
-                                                    <DialogTitle>Edit order</DialogTitle>
-                                                </DialogHeader>
-                                                <Edit id={order.id} />
-                                            </DialogContent>
-                                        </Dialog>
-                                    </div>
+                                <TableCell className='text-right'>
+                                    <Dialog>
+                                        <DropdownMenu modal={false}>
+                                            <DropdownMenuTrigger>
+                                                <Ellipsis size={16} />
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent>
+                                                <DialogTrigger asChild>
+                                                    <DropdownMenuItem>
+                                                        <span>Edit</span>
+                                                    </DropdownMenuItem>
+                                                </DialogTrigger>
+                                                <DropdownMenuItem>view</DropdownMenuItem>
+                                                <DropdownMenuSeparator />
+                                                <Cancel id={order.id} />
+                                                <Remove id={order.id} />
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle>Edit order</DialogTitle>
+                                            </DialogHeader>
+                                            <Edit id={order.id} />
+                                        </DialogContent>
+                                    </Dialog>
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import GetCustomers from './getCustomers'
 
-function page() {
+function Page() {
 
     return (
         <div className='flex h-full w-full justify-center'>
@@ -15,4 +15,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

@@ -2,7 +2,6 @@
 import { Button } from '@/components/ui/button'
 import { decreaseItemAmount, increaseItemAmount } from '@/redux/orderSlice'
 import { Plus, Minus } from 'lucide-react'
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 function SummaryItems() {

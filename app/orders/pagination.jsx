@@ -10,7 +10,6 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import React from 'react'
 
 function OrdersPagination({ totalPages }) {
     const searchParams = useSearchParams()

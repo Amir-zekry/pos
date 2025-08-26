@@ -1,7 +1,6 @@
 'use server'
-import { PrismaClient } from "@/lib/generated/prisma"
+import { PrismaClient } from "@prisma/client"
 import { revalidatePath } from "next/cache"
-import id from "zod/v4/locales/id.cjs"
 const db = new PrismaClient()
 export async function createNewOrder(formData) {
     try {
@@ -98,23 +97,29 @@ export async function editOrder(formData) {
         throw new Error('Failed to edit order')
     }
 }
-export async function startNewDay() {
-    const now = new Date();
-
-    await db.settings.upsert({
-        where: { key: 'dayStart' },
-        update: { value: now.toISOString() },
-        create: { key: 'dayStart', value: now.toISOString() }
-    });
-    revalidatePath('/orders')
-}
 export async function removeProduct(id) {
     try {
         await db.item.delete({
             where: { id: id }
         })
     } catch (error) {
-        throw new Error('Failed to remove product')
+        throw error
+    }
+    revalidatePath('/products')
+}
+export async function editProduct(formData) {
+    try {
+        await db.item.update({
+            where: { id: formData.get('id') },
+            data: {
+                name: formData.get('name'),
+                stock: parseInt(formData.get('stock')),
+                price: parseFloat(formData.get('price')),
+                profit: parseFloat(formData.get('profit')),
+            }
+        })
+    } catch (error) {
+        throw new Error('Failed to edit product')
     }
     revalidatePath('/products')
 }

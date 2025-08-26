@@ -1,8 +1,7 @@
-import React from 'react'
 import OrdersTable from './table'
 import Analytics from './analytics'
 
-async function page({ searchParams }) {
+async function Page({ searchParams }) {
     const params = await searchParams
     const page = params?.page || 1
     return (
@@ -13,4 +12,4 @@ async function page({ searchParams }) {
     )
 }
 
-export default page
+export default Page

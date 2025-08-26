@@ -16,7 +16,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-function page() {
+function Page() {
     const order = useSelector((state) => state.order)
     const disptach = useDispatch()
     const router = useRouter()
@@ -97,4 +97,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

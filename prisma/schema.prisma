@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -55,10 +54,4 @@ model orderItem {
   quantity Int
 
   @@id([orderId, itemId]) // Composite primary key for many-to-many relation
-}
-
-model Settings {
-  id    Int    @id @default(autoincrement())
-  key   String @unique
-  value String
 }

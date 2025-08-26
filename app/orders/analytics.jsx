@@ -1,6 +1,5 @@
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card'
-import React from 'react'
-import { getTotalOrders, getTotalRevenue, getAverageOrderValue } from '../lib/data'
+import { getTotalOrders, getTotalRevenue, getAverageOrderValue } from '@/app/lib/data'
 
 async function Analytics() {
     const totalOrders = await getTotalOrders()
@@ -8,8 +7,8 @@ async function Analytics() {
     const averageOrderValue = await getAverageOrderValue()
     const metrics = [
         { name: 'Total Orders', value: totalOrders },
-        { name: 'Total Revenue', value: totalRevenue || 0 },
-        { name: 'Average Order Value', value: averageOrderValue || 0 },
+        { name: 'Total Revenue', value: totalRevenue._sum.total || 0 },
+        { name: 'Average Order Value', value: averageOrderValue._avg.total || 0 },
     ]
     return (
         <div className='grid grid-cols-3 gap-4'>

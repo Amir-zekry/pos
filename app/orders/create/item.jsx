@@ -1,5 +1,4 @@
 'use client'
-import React from 'react'
 import { Card, CardContent } from '@/components/ui/card';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, removeItem } from '@/redux/orderSlice';

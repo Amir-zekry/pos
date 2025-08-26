@@ -1,5 +1,5 @@
 'use server'
-import { PrismaClient } from "@/lib/generated/prisma"
+import { PrismaClient } from "@prisma/client"
 const db = new PrismaClient()
 export async function getOrders(page) {
     try {
@@ -48,83 +48,80 @@ export async function getCustomers() {
         throw new Error('Failed to fetch customers')
     }
 }
-export async function getProducts() {
-    try {
-        return await db.item.findMany({})
-    } catch (error) {
-        throw new Error('Failed to fetch products')
-    }
-}
 // analytics
 export async function getTotalOrders() {
     try {
-        // Get the saved day start from settings
-        const setting = await db.settings.findUnique({
-            where: { key: 'dayStart' }
-        });
-
-        // If it doesn't exist, default to now
-        const dayStart = setting ? new Date(setting.value) : new Date();
-
-        return await db.order.count({
-            where: {
-                createdAt: {
-                    gte: dayStart
-                },
-            },
-        });
+        return await db.order.count()
     } catch (error) {
         throw new Error('Failed to fetch total orders');
     }
 }
 export async function getTotalRevenue() {
     try {
-        // Get saved start of day
-        const setting = await db.settings.findUnique({
-            where: { key: 'dayStart' }
-        });
-        const dayStart = setting ? new Date(setting.value) : new Date();
-
-        // Aggregate total revenue since dayStart
-        const result = await db.order.aggregate({
+        return await db.order.aggregate({
             _sum: {
                 total: true,
-            },
-            where: {
-                createdAt: {
-                    gte: dayStart,
-                },
-            },
-        });
-
-        return result._sum.total || 0; // Return 0 if no orders
+            }
+        })
     } catch (error) {
         throw new Error('Failed to fetch total revenue');
     }
 }
 export async function getAverageOrderValue() {
     try {
-        // Get saved start of day
-        const setting = await db.settings.findUnique({
-            where: { key: 'dayStart' }
-        });
-        const dayStart = setting ? new Date(setting.value) : new Date();
-
-        // Aggregate average order value since dayStart
-        const result = await db.order.aggregate({
+        return await db.order.aggregate({
             _avg: {
                 total: true,
-            },
-            where: {
-                createdAt: {
-                    gte: dayStart,
-                },
-            },
-        });
-
-        return result._avg.total || 0; // Return 0 if no orders
+            }
+        })
     } catch (error) {
         throw new Error('Failed to fetch average order value');
+    }
+}
+export async function getTotalProducts() {
+    try {
+        return await db.item.count()
+    } catch (error) {
+        throw new Error('Failed to fetch total products')
+    }
+}
+export async function getTopSellingProduct() {
+    try {
+        const result = await db.orderItem.groupBy({
+            by: ['itemId'],
+            _sum: {
+                quantity: true,
+            },
+            orderBy: {
+                _sum: {
+                    quantity: 'desc',
+                },
+            },
+            take: 1,
+        });
+
+        if (result.length === 0) return null;
+
+        const topProduct = await db.item.findUnique({
+            where: { id: result[0].itemId }
+        });
+
+        return topProduct ? topProduct.name : null;
+    } catch (error) {
+        throw new Error('Failed to fetch top selling product')
+    }
+}
+export async function getLowStockAlerts(threshold = 5) {
+    try {
+        return await db.item.count({
+            where: {
+                stock: {
+                    lt: threshold
+                }
+            }
+        })
+    } catch (error) {
+        throw new Error('Failed to fetch low stock products')
     }
 }
 

@@ -7,7 +7,7 @@ import TotalPrice from './totalPrice'
 import Link from 'next/link'
 import Cancel from './cancel'
 
-function page() {
+function Page() {
     return (
         <div className='flex flex-col space-y-4 w-full h-full'>
             <Input placeholder='Search for products...' />
@@ -38,4 +38,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

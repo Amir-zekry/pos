@@ -1,4 +1,3 @@
-import React from 'react'
 import {
     Table,
     TableBody,
@@ -11,11 +10,11 @@ import {
 import { Ellipsis } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
-import { getProducts } from '../lib/data'
+import { getItems } from '../lib/data'
 import Remove from './remove'
 import Edit from './edit'
 async function ProductsTable() {
-    const products = await getProducts()
+    const products = await getItems()
     return (
         <Table>
             <TableCaption>A list of your items.</TableCaption>
@@ -36,29 +35,27 @@ async function ProductsTable() {
                         <TableCell>{product.price}</TableCell>
                         <TableCell className="text-right">{product.profit}</TableCell>
                         <TableCell className="text-right">
-                            <div className='flex justify-center ml-auto'>
-                                <Dialog>
-                                    <DropdownMenu modal={false}>
-                                        <DropdownMenuTrigger>
-                                            <Ellipsis size={16} className="text-right" />
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent>
-                                            <DialogTrigger asChild>
-                                                <DropdownMenuItem>edit</DropdownMenuItem>
-                                            </DialogTrigger>
-                                            <DropdownMenuItem>view</DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <Remove id={product.id} />
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                    <DialogContent>
-                                        <DialogHeader>
-                                            <DialogTitle>Edit order</DialogTitle>
-                                        </DialogHeader>
-                                        <Edit id={product.id} />
-                                    </DialogContent>
-                                </Dialog>
-                            </div>
+                            <Dialog>
+                                <DropdownMenu modal={false}>
+                                    <DropdownMenuTrigger>
+                                        <Ellipsis size={16} />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        <DialogTrigger asChild>
+                                            <DropdownMenuItem>edit</DropdownMenuItem>
+                                        </DialogTrigger>
+                                        <DropdownMenuItem>view</DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <Remove id={product.id} />
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                                <DialogContent>
+                                    <DialogHeader>
+                                        <DialogTitle>Edit order</DialogTitle>
+                                    </DialogHeader>
+                                    <Edit product={product} />
+                                </DialogContent>
+                            </Dialog>
                         </TableCell>
                     </TableRow>
                 ))}
