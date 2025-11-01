@@ -23,11 +23,8 @@ import { getOrders, getTotalPagesForOrders } from "../lib/data"
 import { Badge } from "@/components/ui/badge"
 import { Ellipsis } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import Cancel from "./cancel"
-import Remove from "./remove"
 import OrdersPagination from "./pagination"
 import Search from "./search"
-import Edit from "./edit"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 async function OrdersTable({ page }) {
     const orders = await getOrders(page)
@@ -48,11 +45,9 @@ async function OrdersTable({ page }) {
                         <TableRow>
                             <TableHead className="w-[100px]">Id</TableHead>
                             <TableHead>Customer</TableHead>
-                            <TableHead>Order Type</TableHead>
+                            <TableHead>Item</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Payment Status</TableHead>
-                            <TableHead>Payment Method</TableHead>
-                            <TableHead>Amount</TableHead>
+                            <TableHead>Total</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -61,21 +56,15 @@ async function OrdersTable({ page }) {
                             <TableRow key={order.id}>
                                 <TableCell className="font-medium">{order.id}</TableCell>
                                 <TableCell className='flex flex-col'>
-                                    <p>{order.customer?.name}</p>
-                                    <p className="text-muted-foreground">{order.customer?.number}</p>
+                                    <p>{order.customer.map((c) => c.name)}</p>
+                                    <p className="text-muted-foreground">{order.customer.map((c) => c.number)}</p>
                                 </TableCell>
-                                <TableCell>{order.type}</TableCell>
+                                <TableCell>{order.item.map((i) => i.name)}</TableCell>
                                 <TableCell>
                                     <Badge variant={order.status === 'canceled' ? 'destructive' : 'default'}>
                                         {order.status}
                                     </Badge>
                                 </TableCell>
-                                <TableCell>
-                                    <Badge variant={order.paymentStatus === 'pending' ? 'destructive' : 'default'}>
-                                        {order.paymentStatus}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>{order.paymentMethod}</TableCell>
                                 <TableCell>{order.total} L.E.</TableCell>
                                 <TableCell className='text-right'>
                                     <Dialog>
@@ -91,15 +80,15 @@ async function OrdersTable({ page }) {
                                                 </DialogTrigger>
                                                 <DropdownMenuItem>view</DropdownMenuItem>
                                                 <DropdownMenuSeparator />
-                                                <Cancel id={order.id} />
-                                                <Remove id={order.id} />
+                                                {/* <Cancel id={order.id} />
+                                                <Remove id={order.id} /> */}
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                         <DialogContent>
                                             <DialogHeader>
                                                 <DialogTitle>Edit order</DialogTitle>
                                             </DialogHeader>
-                                            <Edit id={order.id} />
+                                            {/* <Edit id={order.id} /> */}
                                         </DialogContent>
                                     </Dialog>
                                 </TableCell>

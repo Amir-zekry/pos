@@ -1,14 +1,14 @@
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card'
-import { getLowStockAlerts, getTopSellingProduct, getTotalProducts } from '../lib/data'
 
 async function Analytics() {
-    const totalItems = await getTotalProducts()
-    const topSellingProduct = await getTopSellingProduct()
-    const lowStockAlerts = await getLowStockAlerts() // Assuming this function exists to fetch low stock alerts
+    const totalItems = 128
+    const topSellingProduct = 'Blue T-Shirt'
+    const averageProductPrice = '$24.99'
+
     const metrics = [
         { name: 'Total Products', value: totalItems },
-        { name: 'Top Selling Product', value: topSellingProduct || 'N/A' },
-        { name: 'Low Stock Alerts', value: lowStockAlerts || '0' },
+        { name: 'Top Selling Product', value: topSellingProduct },
+        { name: 'Average Product Price', value: averageProductPrice },
     ]
     return (
         <div className='grid grid-cols-3 gap-4'>

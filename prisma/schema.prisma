@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,44 +8,51 @@ datasource db {
 }
 
 model order {
-  id            String      @id @default(uuid())
-  status        String      @default("pending")
-  total         Float
-  type          String?
-  paymentMethod String?
-  paymentStatus String?
-  createdAt     DateTime?   @default(now())
-  customer      customer?   @relation(fields: [customerId], references: [id])
-  customerId    String?
-  items         orderItem[]
+  id        String     @id @default(uuid())
+  status    String     @default("pending")
+  total     Float
+  item      item[]
+  customer  customer[]
+  createdAt DateTime   @default(now())
 }
 
 model item {
-  id        String      @id @default(uuid())
-  name      String
-  price     Float
-  stock     Int?
-  profit    Float?
-  createdAt DateTime?   @default(now())
-  orders    orderItem[]
+  id           String         @id @default(uuid())
+  name         String
+  discription  String
+  price        Float
+  createdAt    DateTime       @default(now())
+  profit       Float
+  Image        String
+  features     feature[]
+  imageGallery imageGallery[]
+  order        order?         @relation(fields: [orderId], references: [id])
+  orderId      String?
 }
 
 model customer {
-  id        String    @id @default(uuid())
-  name      String
-  number    String
-  address   String
-  email     String?
-  createdAt DateTime? @default(now())
-  orders    order[]
+  id          String   @id @default(uuid())
+  name        String
+  number      String
+  address     String
+  governorate String
+  createdAt   DateTime @default(now())
+  order       order?   @relation(fields: [orderId], references: [id])
+  orderId     String?
 }
 
-model orderItem {
-  order    order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  orderId  String
-  item     item   @relation(fields: [itemId], references: [id])
-  itemId   String
-  quantity Int
+model feature {
+  id        String  @id @default(uuid())
+  h1        String
+  p         String
+  image_url String
+  item      item?   @relation(fields: [itemId], references: [id])
+  itemId    String?
+}
 
-  @@id([orderId, itemId]) // Composite primary key for many-to-many relation
+model imageGallery {
+  id        String  @id @default(uuid())
+  image_url String
+  item      item?   @relation(fields: [itemId], references: [id])
+  itemId    String?
 }

@@ -10,7 +10,7 @@ function page() {
             <Card>
                 <CardHeader>
                     <Button asChild>
-                        <Link href='products/add'>Add new product</Link>
+                        <Link href='items/add'>Add new product</Link>
                     </Button>
                 </CardHeader>
                 <CardContent>

@@ -2,99 +2,19 @@
 import { PrismaClient } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 const db = new PrismaClient()
-export async function createNewOrder(formData) {
-    try {
-        const customerId = formData.get('customerId')
-        const total = parseFloat(formData.get('total'))
-        const itemsJson = formData.get('items')
-        const items = JSON.parse(itemsJson)
-        const orderType = formData.get('type')
-        const paymentMethod = formData.get('paymentMethod')
-        const paymentStatus = formData.get('paymentStatus')
-
-        await db.order.create({
-            data: {
-                total,
-                type: orderType,
-                paymentMethod,
-                paymentStatus,
-                ...(customerId
-                    ? { customer: { connect: { id: customerId } } }
-                    : {}), // Only connect if customerId is present
-                items: {
-                    create: items.map((item) => ({
-                        item: { connect: { id: item.id } },
-                        quantity: item.amount,
-                    })),
-                },
-            },
-        })
-    } catch (error) {
-        console.error(error)
-        throw new Error('Failed to create order')
-    }
-}
 export async function addNewProduct(formData) {
     try {
         await db.item.create({
             data: {
                 name: formData.get('name'),
-                stock: parseInt(formData.get('stock')),
+                discription: formData.get('discription'),
+                Image: formData.get('image'),
                 price: parseFloat(formData.get('price')),
                 profit: parseFloat(formData.get('profit')),
             }
         })
     } catch (error) {
         throw new Error('Failed to create item')
-    }
-}
-export async function createNewCustomer({ name, number, address }) {
-    try {
-        await db.customer.create({
-            data: {
-                name,
-                number,
-                address,
-            },
-        })
-    } catch (error) {
-        throw error
-    }
-    revalidatePath('orders/create/details')
-}
-export async function cancelOrder(id) {
-    try {
-        await db.order.update({
-            where: { id: id },
-            data: { status: 'canceled' }
-        })
-    } catch (error) {
-        throw new Error('Failed to cancel order')
-    }
-    revalidatePath('orders')
-}
-export async function removeOrder(id) {
-    try {
-        await db.order.delete({
-            where: { id: id }
-        })
-    } catch (error) {
-        throw new Error('Failed to remove order')
-    }
-    revalidatePath('orders')
-}
-export async function editOrder(formData) {
-    try {
-        await db.order.update({
-            where: { id: formData.get('id') },
-            data: {
-                status: formData.get('status'),
-                paymentStatus: formData.get('paymentStatus'),
-                paymentMethod: formData.get('paymentMethod')
-            }
-        })
-    } catch (error) {
-        throw new Error('Failed to edit order')
     }
 }
 export async function removeProduct(id) {
@@ -122,4 +42,56 @@ export async function editProduct(formData) {
         throw new Error('Failed to edit product')
     }
     revalidatePath('/products')
+}
+export async function addFeature(formData) {
+    try {
+        const itemId = formData.get('itemId')
+        const h1 = formData.get('h1')
+        const p = formData.get('p')
+        const image_url = formData.get('image_url')
+        await db.feature.create({
+            data: {
+                h1,
+                p,
+                item: { connect: { id: itemId } }
+                , image_url
+            }
+        })
+        revalidatePath(`/items/features/${itemId}`)
+    } catch (error) {
+        throw new Error('Failed to add feature')
+    }
+}
+export async function removeFeature(id, itemId) {
+    try {
+        await db.feature.delete({
+            where: { id: id }
+        })
+        revalidatePath(`/items/features/${itemId}`)
+    } catch (error) {
+        throw new Error('Failed to remove feature')
+    }
+}
+export async function addImage(formData) {
+    try {
+        await db.imageGallery.create({
+            data: {
+                image_url: formData.get("image_url"),
+                item: { connect: { id: formData.get("itemId") } }
+            },
+        })
+        revalidatePath(`/items/images/${formData.get("itemId")}`)
+    } catch (error) {
+        throw new Error('Failed to add image')
+    }
+}
+export async function removeImage(id, itemId) {
+    try {
+        await db.imageGallery.delete({
+            where: { id: id }
+        })
+        revalidatePath(`/items/images/${itemId}`)
+    } catch (error) {
+        throw new Error('Failed to remove image')
+    }
 }

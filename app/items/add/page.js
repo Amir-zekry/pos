@@ -12,8 +12,14 @@ function page() {
                 </div>
                 <div>
                     <label>
-                        Stock:
-                        <input type="number" name="stock" />
+                        discription:
+                        <input type="text" name="discription" />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        image URL:
+                        <input type="text" name="image" />
                     </label>
                 </div>
                 <div>

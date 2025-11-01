@@ -13,6 +13,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { getItems } from '../lib/data'
 import Remove from './remove'
 import Edit from './edit'
+import Link from "next/link"
 async function ProductsTable() {
     const products = await getItems()
     return (
@@ -45,6 +46,12 @@ async function ProductsTable() {
                                             <DropdownMenuItem>edit</DropdownMenuItem>
                                         </DialogTrigger>
                                         <DropdownMenuItem>view</DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Link href={`/items/features/${product.id}`}>features</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            <Link href={`/items/images/${product.id}`}>images</Link>
+                                        </DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <Remove id={product.id} />
                                     </DropdownMenuContent>
