@@ -24,6 +24,12 @@ function page() {
                 </div>
                 <div>
                     <label>
+                        hero image URL:
+                        <input type="text" name="heroImage" />
+                    </label>
+                </div>
+                <div>
+                    <label>
                         Price:
                         <input type="number" name="price" step="0.01" />
                     </label>

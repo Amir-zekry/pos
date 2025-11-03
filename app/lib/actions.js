@@ -8,13 +8,14 @@ export async function addNewProduct(formData) {
             data: {
                 name: formData.get('name'),
                 discription: formData.get('discription'),
-                Image: formData.get('image'),
+                heroImage: formData.get('heroImage'),
+                image: formData.get('image'),
                 price: parseFloat(formData.get('price')),
                 profit: parseFloat(formData.get('profit')),
             }
         })
     } catch (error) {
-        throw new Error('Failed to create item')
+        console.error(error)
     }
 }
 export async function removeProduct(id) {
