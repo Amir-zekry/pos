@@ -7,52 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model order {
-  id        String     @id @default(uuid())
-  status    String     @default("pending")
-  total     Float
-  item      item[]
-  customer  customer[]
-  createdAt DateTime   @default(now())
-}
-
-model item {
-  id           String         @id @default(uuid())
-  name         String
-  discription  String
-  price        Float
-  createdAt    DateTime       @default(now())
-  profit       Float
-  Image        String
-  features     feature[]
-  imageGallery imageGallery[]
-  order        order?         @relation(fields: [orderId], references: [id])
-  orderId      String?
-}
-
 model customer {
   id          String   @id @default(uuid())
   name        String
-  number      String
+  number      String   @unique
   address     String
-  governorate String
   createdAt   DateTime @default(now())
-  order       order?   @relation(fields: [orderId], references: [id])
-  orderId     String?
+  governorate String
+  orders      order[]
 }
 
 model feature {
   id        String  @id @default(uuid())
   h1        String
   p         String
+  itemId    String?
   image_url String
   item      item?   @relation(fields: [itemId], references: [id])
-  itemId    String?
 }
 
 model imageGallery {
   id        String  @id @default(uuid())
   image_url String
-  item      item?   @relation(fields: [itemId], references: [id])
   itemId    String?
+  item      item?   @relation(fields: [itemId], references: [id])
+}
+
+model item {
+  id           String         @id @default(uuid())
+  name         String
+  price        Float
+  createdAt    DateTime       @default(now())
+  profit       Float
+  Image        String
+  discription  String
+  feature      feature[]
+  imageGallery imageGallery[]
+  orders       order[]
+}
+
+model order {
+  id         String    @id @default(uuid())
+  status     String    @default("pending")
+  total      Float
+  notes      String?
+  createdAt  DateTime  @default(now())
+  customerId String?
+  itemId     String?
+  customer   customer? @relation(fields: [customerId], references: [id])
+  item       item?     @relation(fields: [itemId], references: [id])
 }

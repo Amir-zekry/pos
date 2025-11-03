@@ -56,10 +56,10 @@ async function OrdersTable({ page }) {
                             <TableRow key={order.id}>
                                 <TableCell className="font-medium">{order.id}</TableCell>
                                 <TableCell className='flex flex-col'>
-                                    <p>{order.customer.map((c) => c.name)}</p>
-                                    <p className="text-muted-foreground">{order.customer.map((c) => c.number)}</p>
+                                    <p>{order.customer.name}</p>
+                                    <p className="text-muted-foreground">{order.customer.number}</p>
                                 </TableCell>
-                                <TableCell>{order.item.map((i) => i.name)}</TableCell>
+                                <TableCell>{order.item.name}</TableCell>
                                 <TableCell>
                                     <Badge variant={order.status === 'canceled' ? 'destructive' : 'default'}>
                                         {order.status}
