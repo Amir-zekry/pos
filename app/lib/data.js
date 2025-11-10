@@ -1,5 +1,6 @@
 'use server'
 import { PrismaClient } from "@prisma/client"
+import { unstable_noStore } from "next/cache"
 const db = new PrismaClient()
 export async function getOrders(page) {
     try {
@@ -24,6 +25,7 @@ export async function getTotalPagesForOrders() {
     }
 }
 export async function getItems() {
+    unstable_noStore()
     try {
         return await db.item.findMany({})
     } catch (error) {

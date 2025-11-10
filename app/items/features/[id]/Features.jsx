@@ -16,7 +16,7 @@ async function Features({ id }) {
                         <CardDescription>{feature.p}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Image src={`/${feature.image_url}`} alt='feature image' width={400} height={400} />
+                        <Image src={feature.image_url} alt='feature image' width={400} height={400} />
                     </CardContent>
                     <CardFooter>
                         <Button
