@@ -34,17 +34,19 @@ model imageGallery {
 }
 
 model item {
-  id           String         @id @default(uuid())
-  name         String
-  price        Float
-  createdAt    DateTime       @default(now())
-  profit       Float
-  image        String
-  heroImage    String
-  discription  String
-  feature      feature[]
-  imageGallery imageGallery[]
-  orders       order[]
+  id             String         @id @default(uuid())
+  name           String
+  price          Float
+  createdAt      DateTime       @default(now())
+  profit         Float
+  image          String
+  heroImage      String
+  heroImagePhone String?
+  discription    String
+  note           String?
+  feature        feature[]
+  imageGallery   imageGallery[]
+  orders         order[]
 }
 
 model order {

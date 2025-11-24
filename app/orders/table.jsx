@@ -35,7 +35,10 @@ async function OrdersTable({ page }) {
                 <div className="flex items-center justify-between space-x-4">
                     <Search />
                     <Button asChild>
-                        <Link href='/orders/create'>Create new order</Link>
+                        <Link 
+                        href='https://sort-psi.vercel.app'
+                        target="_blank"
+                        >Create new order</Link>
                     </Button>
                 </div>
             </CardHeader>

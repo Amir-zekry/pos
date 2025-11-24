@@ -54,4 +54,75 @@ export async function getImages(id) {
         throw new Error('Failed to fetch images for this item')
     }
 }
+// analytics
+
+export async function getTotalItems() {
+    try {
+        return await db.item.count()
+    } catch (error) {
+        throw new Error('Failed to fetch total items')
+    }
+}
+export async function getTopSellingItem() {
+  try {
+    const topItem = await db.order.groupBy({
+      by: ["itemId"],
+      _count: { itemId: true },
+      orderBy: { _count: { itemId: "desc" } },
+      take: 1,
+    });
+    const itemId = topItem[0].itemId;
+    const product = await db.item.findUnique({
+      where: { id: itemId },
+      select: { name: true },
+    });
+
+    return product.name;
+  } catch (error) {
+    throw new Error("Failed to fetch top selling item");
+  }
+}
+export async function getAverageProductPrice() {
+    try {
+        return await db.item.aggregate({
+            _avg: {
+                price: true,
+            },
+        })
+    } catch (error) {
+        throw new Error('Failed to fetch average product price')
+    }
+}
+
+// orders analytics
+
+export async function getTotalOrders() {
+    try {
+        return await db.order.count()
+    } catch (error) {
+        throw new Error('Failed to fetch total orders')
+    }
+}
+export async function getTotalRevenue() {
+    try {
+        return await db.order.aggregate({
+            _sum: {
+                total: true,
+            },
+        })
+    } catch (error) {
+        throw new Error('Failed to fetch total revenue')
+    }
+}
+export async function getAverageOrderValue() {
+    try {
+        return await db.order.aggregate({
+            _avg: {
+                total: true,
+            },
+        })
+    } catch (error) {
+        throw new Error('Failed to fetch average order value')
+    }
+}
 

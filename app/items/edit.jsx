@@ -6,7 +6,6 @@ function Edit({ product }) {
         <form action={editProduct}>
             <input type="hidden" name="id" value={product.id} />
             <input type="text" name="name" placeholder="Product Name" defaultValue={product.name} />
-            <input type="number" name="stock" placeholder="Stock" defaultValue={product.stock} />
             <input type="number" name="price" placeholder="Price" defaultValue={product.price} />
             <input type="number" name="profit" placeholder="Profit" defaultValue={product.profit} />
             <DialogClose asChild>

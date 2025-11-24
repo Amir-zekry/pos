@@ -9,6 +9,7 @@ export async function addNewProduct(formData) {
                 name: formData.get('name'),
                 discription: formData.get('discription'),
                 heroImage: formData.get('heroImage'),
+                heroImagePhone: formData.get('heroImagePhone'),
                 image: formData.get('image'),
                 price: parseFloat(formData.get('price')),
                 profit: parseFloat(formData.get('profit')),
@@ -34,7 +35,6 @@ export async function editProduct(formData) {
             where: { id: formData.get('id') },
             data: {
                 name: formData.get('name'),
-                stock: parseInt(formData.get('stock')),
                 price: parseFloat(formData.get('price')),
                 profit: parseFloat(formData.get('profit')),
             }

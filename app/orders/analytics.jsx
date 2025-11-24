@@ -1,9 +1,13 @@
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card'
+import { getAverageOrderValue, getTotalOrders, getTotalRevenue } from '../lib/data'
 async function Analytics() {
+    const totalOrders = await getTotalOrders()
+    const totalRevenue = await getTotalRevenue()
+    const averageOrderValue = await getAverageOrderValue()
     const metrics = [
-        { name: 'Total Orders', value: 1234 },
-        { name: 'Total Revenue', value: '$56,789.00' },
-        { name: 'Average Order Value', value: '$46.12' },
+        { name: 'Total Orders', value: totalOrders || 0 },
+        { name: 'Total Revenue', value: totalRevenue._sum.total || 0 },
+        { name: 'Average Order Value', value: averageOrderValue._avg.total || 0 },
     ]
     return (
         <div className='grid grid-cols-3 gap-4'>
