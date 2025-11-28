@@ -3,7 +3,7 @@ import { getAverageProductPrice, getTopSellingItem, getTotalItems } from '../lib
 
 async function Analytics() {
     const totalItems = await getTotalItems()
-    const averageProductPrice = (await getAverageProductPrice())._avg.price.toFixed(2)
+    const averageProductPrice = (await getAverageProductPrice())._avg.price
 
     const metrics = [
         { name: 'Total Products', value: totalItems || 0 },

@@ -27,9 +27,10 @@ export async function getTotalPagesForOrders() {
 export async function getItems() {
     unstable_noStore()
     try {
-        return await db.item.findMany({})
+        const items = await db.item.findMany()
+        return items
     } catch (error) {
-        throw new Error('Failed to fetch items')
+        console.log(error)
     }
 }
 export async function getFeatures(id) {
@@ -58,37 +59,39 @@ export async function getImages(id) {
 
 export async function getTotalItems() {
     try {
-        return await db.item.count()
+        const totalItems = await db.item.count()
+        return totalItems || 0
     } catch (error) {
         throw new Error('Failed to fetch total items')
     }
 }
 export async function getTopSellingItem() {
-  try {
-    const topItem = await db.order.groupBy({
-      by: ["itemId"],
-      _count: { itemId: true },
-      orderBy: { _count: { itemId: "desc" } },
-      take: 1,
-    });
-    const itemId = topItem[0].itemId;
-    const product = await db.item.findUnique({
-      where: { id: itemId },
-      select: { name: true },
-    });
+    try {
+        const topItem = await db.order.groupBy({
+            by: ["itemId"],
+            _count: { itemId: true },
+            orderBy: { _count: { itemId: "desc" } },
+            take: 1,
+        });
+        const itemId = topItem[0].itemId;
+        const product = await db.item.findUnique({
+            where: { id: itemId },
+            select: { name: true },
+        });
 
-    return product.name;
-  } catch (error) {
-    throw new Error("Failed to fetch top selling item");
-  }
+        return product.name || 'n\a'
+    } catch (error) {
+        throw new Error("Failed to fetch top selling item");
+    }
 }
 export async function getAverageProductPrice() {
     try {
-        return await db.item.aggregate({
+        const avg = await db.item.aggregate({
             _avg: {
                 price: true,
             },
         })
+        return avg || 0
     } catch (error) {
         throw new Error('Failed to fetch average product price')
     }

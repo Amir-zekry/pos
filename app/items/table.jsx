@@ -45,7 +45,7 @@ async function ProductsTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {products.map((product) => (
+                        {products?.map((product) => (
                             <TableRow key={product.id}>
                                 <TableCell className="font-medium">{product.name}</TableCell>
                                 <TableCell>{product.price}</TableCell>
