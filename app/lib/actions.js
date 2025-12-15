@@ -96,3 +96,28 @@ export async function removeImage(id, itemId) {
         throw new Error('Failed to remove image')
     }
 }
+
+//orders actions
+export async function removeOrder(id) {
+    try {
+        await db.order.delete({
+            where: { id: id }
+        })
+        revalidatePath('/orders')
+    } catch (error) {
+        console.log(error)
+    }
+}
+export async function editOrder(formData) {
+    try {
+        await db.order.update({
+            where: { id: formData.get('id') },
+            data: {
+                status: formData.get('status')
+            }
+        })
+        revalidatePath('/orders')
+    } catch (error) {
+        throw new Error('Failed to edit order')
+    }
+}

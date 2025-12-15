@@ -26,6 +26,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import OrdersPagination from "./pagination"
 import Search from "./search"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import Remove from "./Remove"
+import Edit from "./Edit"
+import OrdersDropdownMenuDialog from "./DropDownMenyDialog"
 async function OrdersTable({ page }) {
     const orders = await getOrders(page)
     const totalPages = await getTotalPagesForOrders()
@@ -35,10 +38,12 @@ async function OrdersTable({ page }) {
                 <div className="flex items-center justify-between space-x-4">
                     <Search />
                     <Button asChild>
-                        <Link 
-                        href='https://sort-psi.vercel.app'
-                        target="_blank"
-                        >Create new order</Link>
+                        <Link
+                            href='https://sort-psi.vercel.app'
+                            target="_blank"
+                        >
+                            Create new order
+                        </Link>
                     </Button>
                 </div>
             </CardHeader>
@@ -70,30 +75,7 @@ async function OrdersTable({ page }) {
                                 </TableCell>
                                 <TableCell>{order.total} L.E.</TableCell>
                                 <TableCell className='text-right'>
-                                    <Dialog>
-                                        <DropdownMenu modal={false}>
-                                            <DropdownMenuTrigger>
-                                                <Ellipsis size={16} />
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent>
-                                                <DialogTrigger asChild>
-                                                    <DropdownMenuItem>
-                                                        <span>Edit</span>
-                                                    </DropdownMenuItem>
-                                                </DialogTrigger>
-                                                <DropdownMenuItem>view</DropdownMenuItem>
-                                                <DropdownMenuSeparator />
-                                                {/* <Cancel id={order.id} />
-                                                <Remove id={order.id} /> */}
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
-                                        <DialogContent>
-                                            <DialogHeader>
-                                                <DialogTitle>Edit order</DialogTitle>
-                                            </DialogHeader>
-                                            {/* <Edit id={order.id} /> */}
-                                        </DialogContent>
-                                    </Dialog>
+                                    <OrdersDropdownMenuDialog order={order} />
                                 </TableCell>
                             </TableRow>
                         ))}
