@@ -77,6 +77,7 @@ export default function OrdersDropdownMenuDialog({ order }) {
                         <p className="text-muted-foreground">{order.customer.number}</p>
                         <p>{order.quantity}</p>
                         <p>{order.customer.address}</p>
+                        <p>{order.customer.governorate}</p>
                     </div>
                     <DialogFooter>
                         <DialogClose asChild>
